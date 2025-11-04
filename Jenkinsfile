@@ -50,7 +50,7 @@ pipeline {
 
                     // Run new container
                     bat """
-                    docker run -d -p 8081:80 --name tp4 ${registry}:${BUILD_NUMBER}
+                    docker run -d -p 8083:80 --name tp4 ${registry}:${BUILD_NUMBER}
                     """
                 }
             }
