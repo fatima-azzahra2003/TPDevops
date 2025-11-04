@@ -1,10 +1,10 @@
 pipeline {
+    agent any
+
     environment {
         registry = "fatimaazzahra2003/tpdevops"
         registryCredential = 'devopsjenkins'
-        dockerImage = ''
     }
-    agent any
 
     stages {
 
@@ -33,20 +33,20 @@ pipeline {
         stage('Publish Image') {
             steps {
                 script {
-                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('https://index.docker.io/v1/', registryCredential) {
                         dockerImage.push()
                     }
                 }
             }
         }
-
         stage('Deploy image') {
             steps {
-                script {
-                    bat "docker rm -f tp4 || echo 'container not running'"
-                    bat "docker run -d -p 8081:80 --name tp4 ${registry}:${BUILD_NUMBER}"
-                }
-            }
+            script {
+                bat "docker rm -f tp4 || echo 'container not running'"
+                bat "docker run -d -p 8081:80 --name tp4 ${registry}:${BUILD_NUMBER}"
         }
+    }
+}
+
     }
 }
